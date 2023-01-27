@@ -1,0 +1,9 @@
+.todoItem{
+    font-size: larger;
+}
+.done{
+    text-decoration: line-through;
+}
+.notDone{
+    text-decoration: none;
+}
