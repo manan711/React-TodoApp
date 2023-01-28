@@ -28,6 +28,31 @@ class App extends React.Component {
 		// to the this.state.todoitems
 		// clear the value of this.state.todotext
 	}
+
+	handleClear = () =>
+		this.setState({
+			todoitems: [],
+		});
+
+	componentDidMount = () => {
+		fetch("https://jsonplaceholder.typicode.com/todos")
+			.then((response) => response.json())
+			.then((result) => {
+				let newTodoItems = [];
+				for (let element of result) {
+					newTodoItems.push(
+						<TodoItem
+							id={element.id}
+							handleDelete={this.handleDelete}
+							description={element.title}></TodoItem>
+					);
+				}
+				this.setState({
+					todoitems: newTodoItems,
+				});
+			});
+	};
+
 	handleEnter = (e) => {
 		if (e.key === "Enter") this.handleAdd();
 	};
@@ -52,8 +77,10 @@ class App extends React.Component {
 							onKeyDown={this.handleEnter}
 							type="text"
 							placeholder="Enter your todo item"
-						/>
-						<button onClick={this.handleAdd}>Add</button>
+						/>{" "}
+						<button onClick={this.handleAdd}>Add</button>{" "}
+						<button onClick={this.handleClear}>Clear All</button>{" "}
+						<button onClick={this.componentDidMount}>Load All</button>
 					</section>
 					<br></br>
 					<section>
